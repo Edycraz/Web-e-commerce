@@ -18,6 +18,7 @@ import ProductTable from './components/ProductTable/ProductTable';
 import VerCategorias from './components/Ver Categorias/VerCategorias';
 import EditProduct from './components/Editar Producto/EditProduct';
 import PATHROUTES from './helpers/PathRoutes.helper';
+import MensajePago from './components/MensajePago/MensajePago';
 
 import { CarritoProvider } from './providers/carritoContext';
 import Footer from './components/Footer/Footer';
@@ -30,7 +31,7 @@ function App() {
   const [filtroActual, setFiltroActual] = useState({ categoria: '', precio: 100000, ordenamiento: 'precio_desc' });
 
   useEffect(() => {
-    fetch('http://localhost:3000')
+    fetch('https://bookfinderback.onrender.com')
       .then((response) => response.json())
       .then((data) => {
         setLibrosFiltrados(data);
@@ -49,7 +50,7 @@ function App() {
     queryParams += `precio=${filtroActual.precio}&`;
     queryParams += `ordenamiento=${filtroActual.ordenamiento}`;
 
-    fetch(`http://localhost:3000/?${queryParams}`)
+    fetch(`https://bookfinderback.onrender.com/?${queryParams}`)
       .then(response => response.json())
       .then(data => setLibrosFiltrados(data))
       .catch(error => console.error('Error:', error));
@@ -71,7 +72,7 @@ function App() {
   };
 
   const onSearchSubmit = (searchTerm) => {
-    fetch(`http://localhost:3000/search?query=${encodeURIComponent(searchTerm)}`)
+    fetch(`https://bookfinderback.onrender.com/search?query=${encodeURIComponent(searchTerm)}`)
       .then(response => response.json())
       .then(data => setLibrosFiltrados(data))
       .catch(error => console.error('Error al buscar libros:', error));
@@ -92,7 +93,7 @@ function App() {
     };
 
   return (
-    <div>
+    <div style={{ marginTop: '70px', minHeight: '795px', backgroundColor: "#fff" }}>
       <CarritoProvider>
         <Navbar />
         <Routes>
@@ -168,6 +169,9 @@ function App() {
 
           <Route path='/login' element={<Login/>}></Route>
           <Route path={'registroexitoso'} element={<RegistroExitoso/>}></Route>
+          <Route path="/pago-exitoso" element={<MensajePago estado="exitoso" />} />
+        <Route path="/pago-fallido" element={<MensajePago estado="fallido" />} />
+        <Route path="/pago-pendiente" element={<MensajePago estado="pendiente" />} />
         </Routes>
       </CarritoProvider>
     </div>

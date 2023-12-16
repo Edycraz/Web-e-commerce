@@ -17,7 +17,7 @@ function App() {
 
   // Obtener los libros al cargar el componente
   useEffect(() => {
-    fetch('http://localhost:3000')
+    fetch('https://bookfinderback.onrender.com')
       .then((response) => response.json())
       .then((data) => {
         setLibros(data);
@@ -26,7 +26,7 @@ function App() {
   }, []);
 
   const onPriceChange = (nuevoPrecio) => {
-    fetch(`http://localhost:3000/?precio_$=${nuevoPrecio}`)
+    fetch(`https://bookfinderback.onrender.com/?precio_$=${nuevoPrecio}`)
         .then(response => response.json())
         .then(data => {
             setLibrosFiltrados(data);
@@ -41,7 +41,7 @@ function App() {
       queryParams.append('categoria', categoria);
     }
     
-    fetch(`http://localhost:3000/?${queryParams.toString()}`)
+    fetch(`https://bookfinderback.onrender.com/?${queryParams.toString()}`)
       .then(response => response.json())
       .then(data => {
         setLibrosFiltrados(data);

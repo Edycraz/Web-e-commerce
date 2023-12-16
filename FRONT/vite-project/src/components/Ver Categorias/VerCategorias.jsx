@@ -10,7 +10,7 @@ const VerCategorias = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:3000/categorias-buscar-todas')
+    fetch('https://bookfinderback.onrender.com/categorias-buscar-todas')
       .then((response) => response.json())
       .then((data) => setCategorias(data))
       .catch((error) => console.error('Error fetching categories:', error));

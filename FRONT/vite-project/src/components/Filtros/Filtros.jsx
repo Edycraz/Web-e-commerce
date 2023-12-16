@@ -9,7 +9,7 @@ const Filtros = ({ onFilterChange, onPriceChange, onSortChange, precioMax }) => 
 
     useEffect(() => {
         // Cargar las categorías desde el backend
-        fetch('http://localhost:3000/categorias')
+        fetch('https://bookfinderback.onrender.com/categorias')
             .then(response => response.json())
             .then(data => setCategorias(data))
             .catch(error => console.error('Error al cargar categorías:', error));

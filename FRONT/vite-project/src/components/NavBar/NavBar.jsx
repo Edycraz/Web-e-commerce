@@ -19,7 +19,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import CloseIcon from '@mui/icons-material/Close';
-import PasarelaDePago from '../Pasarela de pago/PasarelaDePago.jsx';
+//import PasarelaDePago from '../Pasarela de pago/PasarelaDePago.jsx';
 import { Link, useNavigate } from 'react-router-dom';
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import Login from '../../Views/Login.jsx';
@@ -82,6 +82,7 @@ export default function Navbar() {
 
 // ------------
 // Modal login para protección de pago
+const navigate = useNavigate();
 
 const [modalLoginAbierto, setModalLoginAbierto] = useState(false)
 const handleModalLogin = () => setModalLoginAbierto(!modalLoginAbierto)
@@ -150,7 +151,7 @@ const handleModalLogin = () => setModalLoginAbierto(!modalLoginAbierto)
         return `${producto.titulo}${cantidad > 1 ? ` (${cantidad})` : ""}`;
       });
   
-      const response = await fetch("http://localhost:3000/create_preference", {
+      const response = await fetch("https://bookfinderback.onrender.com/create_preference", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -200,13 +201,25 @@ const handleModalLogin = () => setModalLoginAbierto(!modalLoginAbierto)
       setMostrarBotonMercadoPago(true);
     }
   };
-
- 
+  const userRole = localStorage.getItem("userRol");
+  const redirectToLogin = () => {
+    manejarCerrarModalCarrito();
+    navigate('/login');
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
+    {userRole === 'admin' && (
+            <Button
+              color="inherit"
+              component={Link}
+              to="/administrador"
+            >
+              Panel de Administración
+            </Button>
+          )}
       <AppBar position="fixed" sx={{ backgroundColor: '#2196F3' }}>
-        <Toolbar>
+        <Toolbar >
      
           <Link to={localStorage.getItem("userRol") === 'admin' ? "#" : "/"}> {/* Agrega el enlace al inicio */}
             <IconButton
@@ -216,9 +229,19 @@ const handleModalLogin = () => setModalLoginAbierto(!modalLoginAbierto)
               aria-label="menu"
               sx={{ mr: 2 }}
             >
-              <img src={logo} alt="Logo" />
             </IconButton>
           </Link>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            component={Link}
+            to="/"
+          >
+            <img src={logo} alt="Logo" />
+          </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
             Los mejores libros
           </Typography>
@@ -228,7 +251,7 @@ const handleModalLogin = () => setModalLoginAbierto(!modalLoginAbierto)
           {localStorage.getItem("loggedIn") === "true" || isAuthenticated ?
 
            <Button color='inherit' onClick={signOut}> Cerrar sesión </Button> :
-           <Link to={'/login'}><Button color="inherit" >Iniciar sesión</Button></Link>
+           <Link to={'/login'}><Button style={{ color: '#fff' }}>Iniciar sesión</Button></Link>
         }
          
           {localStorage.getItem("userRol") != 'admin' && 
@@ -262,8 +285,8 @@ const handleModalLogin = () => setModalLoginAbierto(!modalLoginAbierto)
       />
       </AppBar>
 
-      <Modal open={modalCarritoAbierto} onClose={manejarCerrarModalCarrito}>
-  <Box sx={{ ...modalStyle, overflowY: 'auto', maxHeight: '800px'}}>
+      <Modal color="primary" open={modalCarritoAbierto} onClose={manejarCerrarModalCarrito}>
+  <Box sx={{ ...modalStyle, overflowY: 'auto', maxHeight: '800px', width: '85%', maxWidth: '600px',  }}>
     <IconButton
       aria-label="close"
       onClick={manejarCerrarModalCarrito}
@@ -308,7 +331,7 @@ const handleModalLogin = () => setModalLoginAbierto(!modalLoginAbierto)
                 Total: {precioTotalGeneral} AR$
               </Typography>
               <Button
-                onClick={localStorage.getItem("loggedIn") === "true" || isAuthenticated ? handleBuy : handleModalLogin}
+                onClick={localStorage.getItem("loggedIn") === "true" || isAuthenticated ? handleBuy : redirectToLogin}
                 style={{ 
                   backgroundColor: '#009ee3', 
                   color: '#ffffff',
@@ -320,7 +343,6 @@ const handleModalLogin = () => setModalLoginAbierto(!modalLoginAbierto)
                   cursor: 'pointer',
                   padding: '16px',
                   width: '100%',
-                  minWidth: '280px',
                   overflow: 'hidden',
                   whiteSpace: 'nowrap',
                   lineHeight: '18px',
@@ -341,7 +363,7 @@ const handleModalLogin = () => setModalLoginAbierto(!modalLoginAbierto)
       </Modal>
 
       <Modal open={modalLoginAbierto} onClose={handleModalLogin}>
-       <Box sx={modalStyle}>
+       <Box sx={{ ...modalStyle, overflowY: 'auto', maxHeight: '600px', width: '70%', maxWidth: '400px',  }}>
         <Typography sx={{ color: red[500] }}>
             <Error sx={{ color: red[500] }}/>
             Debe iniciar sesión para continuar.
@@ -350,11 +372,6 @@ const handleModalLogin = () => setModalLoginAbierto(!modalLoginAbierto)
        </Box>
       </Modal>
       
-      <Modal open={modalPagoAbierto} onClose={manejarCerrarModalPago}>
-        <Box sx={modalStyle}>
-          <PasarelaDePago total={precioTotalGeneral} cerrarModal={manejarCerrarModalPago} />
-        </Box>
-      </Modal>
     </Box>
   );
 }

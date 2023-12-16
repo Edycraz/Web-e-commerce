@@ -13,7 +13,7 @@ const ProductTable = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:3000') 
+    fetch('https://bookfinderback.onrender.com') 
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error('Error fetching products:', error));
@@ -33,7 +33,7 @@ const ProductTable = () => {
     );
     if (confirmDelete) {
     try {
-      const response = await fetch(`http://localhost:3000/producto-delete/${product.id}`, {
+      const response = await fetch(`https://bookfinderback.onrender.com/producto-delete/${product.id}`, {
         method: 'DELETE',
       });
 

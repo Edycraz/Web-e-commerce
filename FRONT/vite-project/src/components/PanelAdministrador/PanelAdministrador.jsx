@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styles from './PanelAdministrador.module.css';
 import axios from 'axios';
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { Box, TextField, FormControl, InputLabel, Select, MenuItem, Button, RadioGroup, FormControlLabel, FormLabel, Radio, Snackbar, IconButton, TextareaAutosize } from '@mui/material';
+
+
 
 
 
@@ -35,7 +36,7 @@ const PanelAdministrador = () => {
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const response = await fetch('http://localhost:3000/categorias-buscar-todas'); 
+        const response = await fetch('https://bookfinderback.onrender.com/categorias-buscar-todas'); 
         if (!response.ok) {
           throw new Error('Error al obtener categorías.');
         }
@@ -124,7 +125,7 @@ const PanelAdministrador = () => {
   const checkIsbnExists = async (isbn) => {
     const isbnString = String(isbn);
 
-    const url = `http://localhost:3000/producto/check?isbn=${isbnString}`; // Reemplaza con tu endpoint real
+    const url = `https://bookfinderback.onrender.com/producto/check?isbn=${isbnString}`; // Reemplaza con tu endpoint real
     
     try {
       const response = await fetch(url);
@@ -139,7 +140,7 @@ const PanelAdministrador = () => {
   };
 
     const postData = async () => {
-        const url = 'http://localhost:3000';       
+        const url = 'https://bookfinderback.onrender.com';       
         try {
           const response = await fetch(url, {
             method: 'POST',
@@ -209,233 +210,223 @@ const PanelAdministrador = () => {
     
 
     <div className={styles.container}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <h2 className={styles.title}>Formulario de Producto</h2>
-        
-        <div className={styles.formGroup}>
-          <label htmlFor="titulo">Título:</label>
-          <input
-            type="text"
-            id="titulo"
-            name="titulo"
-            value={producto.titulo}
-            onChange={handleInputChange}
-            required
-            className={styles.input}
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="autor">Autor:</label>
-          <input
-            type="text"
-            id="autor"
-            name="autor"
-            value={producto.autor}
-            onChange={handleInputChange}
-            required
-            className={styles.input}
-          />
-        </div>
-
-
-<div className={styles.formGroup}>
-          <label htmlFor="precio_$">Precio:</label>
-          <input
-            type="number"
-            id="precio_$"
-            name="precio_$"
-            value={precioValue}
-            onChange={handleInputChange}
-            required
-            className={styles.input}
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="nro_paginas">Número de Páginas:</label>
-          <input
-            type="number"
-            id="nro_paginas"
-            name="nro_paginas"
-            value={producto.nro_paginas}
-            onChange={handleInputChange}
-            className={styles.input}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="peso">Peso:</label>
-          <input
-            type="number"
-            id="peso"
-            name="peso"
-            value={producto.peso}
-            onChange={handleInputChange}
-            className={styles.input}
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-  <label htmlFor="fecha_publicacion">Fecha de Publicación:</label>
-  <input
-    type="date"
-    id="fecha_publicacion"
-    name="fecha_publicacion"
-    value={producto.fecha_publicacion}
-    onChange={handleInputChange}
-    required
-    className={styles.input}
-    pattern="\d{4}-\d{2}-\d{2}" // Patrón para el formato YYYY-MM-DD
-  />
-</div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="ISBN">ISBN:</label>
-          <input
-            type="text"
-            id="ISBN"
-            name="ISBN"
-            value={producto.ISBN}
-            onChange={handleInputChange}
-            required
-            className={styles.input}
-            />
-            {producto.ISBN.length !== 13 && (
-      <span className={styles.error}>El ISBN debe tener 13 dígitos</span>
-    )}
-    {isbnExists && (
-      <span className={styles.error}>El ISBN ya existe en la base de datos</span>
-    )}
-        </div>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="editorial">Editorial:</label>
-          <input
-            type="text"
-            id="editorial"
-            name="editorial"
-            value={producto.editorial}
-            onChange={handleInputChange}
-            required
-            className={styles.input}
-          />
-        </div>
-
+      <Box component="form" onSubmit={handleSubmit} sx={{ /* tus estilos MUI aquí */ }}>
+      <h2>Formulario de Producto</h2>
       
+      {/* Título */}
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          label="Título"
+          type="text"
+          id="titulo"
+          name="titulo"
+          value={producto.titulo}
+          onChange={handleInputChange}
+          required
+          fullWidth
+        />
+      </Box>
 
+      {/* Autor */}
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          label="Autor"
+          type="text"
+          id="autor"
+          name="autor"
+          value={producto.autor}
+          onChange={handleInputChange}
+          required
+          fullWidth
+        />
+      </Box>
 
-<div className={styles.formGroup}>
-  <label htmlFor="idioma">Idioma:</label>
-  <select
-    id="idioma"
-    name="idioma"
-    value={producto.idioma}
-    onChange={handleInputChange}
-    required
-    className={styles.input}
-    >
-    <option value="">Selecciona una categoría</option>
-    <option value="Castellano">Castellano</option>
-    <option value="Inglés">Inglés</option>
-    <option value="Aleman">Alemán</option>
-    <option value="Latin">Latín</option>
-    <option value="Frances">Francés</option>
-    <option value="Hebreo">Hebreo</option>
-    <option value="Otro">Otro</option>
-  </select>
-</div>
+      {/* Precio */}
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          label="Precio"
+          type="number"
+          id="precio_$"
+          name="precio_$"
+          value={precioValue}
+          onChange={handleInputChange}
+          required
+          fullWidth
+        />
+      </Box>
 
+      {/* Número de Páginas */}
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          label="Número de Páginas"
+          type="number"
+          id="nro_paginas"
+          name="nro_paginas"
+          value={producto.nro_paginas}
+          onChange={handleInputChange}
+          required
+          fullWidth
+        />
+      </Box>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="descripcion">Descripción:</label>
-          <textarea
-            id="descripcion"
-            name="descripcion"
-            value={producto.descripcion}
+      {/* Peso */}
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          label="Peso"
+          type="number"
+          id="peso"
+          name="peso"
+          value={producto.peso}
+          onChange={handleInputChange}
+          fullWidth
+        />
+      </Box>
+
+      {/* Fecha de Publicación */}
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          label="Fecha de Publicación"
+          type="date"
+          id="fecha_publicacion"
+          name="fecha_publicacion"
+          value={producto.fecha_publicacion}
+          onChange={handleInputChange}
+          required
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+        />
+      </Box>
+
+      {/* ISBN */}
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          label="ISBN"
+          type="text"
+          id="ISBN"
+          name="ISBN"
+          value={producto.ISBN}
+          onChange={handleInputChange}
+          required
+          fullWidth
+          error={producto.ISBN.length !== 13 || isbnExists}
+          helperText={(producto.ISBN.length !== 13 && "El ISBN debe tener 13 dígitos") || (isbnExists && "El ISBN ya existe en la base de datos")}
+        />
+      </Box>
+
+      {/* Editorial */}
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          label="Editorial"
+          type="text"
+          id="editorial"
+          name="editorial"
+          value={producto.editorial}
+          onChange={handleInputChange}
+          required
+          fullWidth
+        />
+      </Box>
+
+      {/* Idioma */}
+      <Box sx={{ mb: 2 }}>
+        <FormControl fullWidth>
+          <InputLabel>Idioma</InputLabel>
+          <Select
+            id="idioma"
+            name="idioma"
+            value={producto.idioma}
             onChange={handleInputChange}
-            rows={4}
-            cols={50}
-            className={styles.input}
-          />
-        </div>
+            required
+          >
+            {/* Opciones de idioma */}
+            <MenuItem value="Castellano">Castellano</MenuItem>
+            {/* ...otros idiomas */}
+          </Select>
+        </FormControl>
+      </Box>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="categoria">Categoría:</label>
-          <select
+      {/* Descripción */}
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          label="Descripción"
+          multiline
+          rows={4}
+          id="descripcion"
+          name="descripcion"
+          value={producto.descripcion}
+          onChange={handleInputChange}
+          fullWidth
+        />
+      </Box>
+
+      {/* Categoría */}
+      <Box sx={{ mb: 2 }}>
+        <FormControl fullWidth>
+          <InputLabel>Categoría</InputLabel>
+          <Select
             id="categoria"
             name="categoria"
             value={producto.categoria}
             onChange={handleCategoriaChange}
-            className={styles.input}
           >
-            <option value="">Selecciona una categoría</option>
+            {/* Opciones de categoría */}
             {categorias.map((categoria) => (
-              <option key={categoria.id} value={categoria.id}>
-                {categoria.nombre}
-              </option>
+              <MenuItem key={categoria.id} value={categoria.id}>{categoria.nombre}</MenuItem>
             ))}
-          </select>
-        </div>
+          </Select>
+        </FormControl>
+      </Box>
 
-
-        <div className={styles.formGroup}>
-      <label>Stock:</label>
-      <div>
-        <input
-          type="radio"
-          id="stockTrue"
+      {/* Stock */}
+      <FormControl component="fieldset" sx={{ mb: 2 }}>
+        <FormLabel component="legend">Stock</FormLabel>
+        <RadioGroup
+          row
           name="stock"
-          value="true"
-          checked={producto.stock === true}
+          value={producto.stock.toString()}
           onChange={handleInputChange}
-          className={styles.checkbox}
-        />
-        <label htmlFor="stockTrue">Disponible</label>
-      </div>
-      <div>
-        <input
-          type="radio"
-          id="stockFalse"
-          name="stock"
-          value="false"
-          checked={producto.stock === false}
-          onChange={handleInputChange}
-          className={styles.checkbox}
-        />
-        <label htmlFor="stockFalse">No Disponible</label>
-      </div>
-    </div>
+        >
+          <FormControlLabel value="true" control={<Radio />} label="Disponible" />
+          <FormControlLabel value="false" control={<Radio />} label="No Disponible" />
+        </RadioGroup>
+      </FormControl>
 
-
-        <div className={styles.formGroup}>
-          <label htmlFor="url_imagen">Seleccionar Imagen:</label>
+      {/* Imagen */}
+      <Box sx={{ mb: 2 }}>
+        <Button
+          variant="contained"
+          component="label"
+        >
+          Seleccionar Imagen
           <input
             type="file"
+            hidden
             id="url_imagen"
             name="url_imagen"
             onChange={(e) => {
               handleInputChange(e);
               changeUploadImage(e);
             }}
-            className={styles.input}
             accept="image/*"
             required
           />
-          {urlImagen && (
-            <div>
-              <img src={urlImagen} alt="Imagen seleccionada" />
-              <span className={styles.imageURL}>{urlImagen}</span>
-              <button onClick={deleteImage}>Eliminar Imagen</button>
-            </div>
-          )}
-        </div>
+        </Button>
+        {urlImagen && (
+          <Box>
+            <img src={urlImagen} alt="Imagen seleccionada" style={{ width: '100%', marginTop: '10px' }} />
+            <Box>{urlImagen}</Box>
+            <Button onClick={deleteImage}>Eliminar Imagen</Button>
+          </Box>
+        )}
+      </Box>
 
-        <button type="submit" className={styles.button} disabled={isbnExists || producto.ISBN.length !== 13}>
-    Guardar Producto
-  </button>
-</form>
+      {/* Botón de envío */}
+      <Box sx={{ mb: 2 }}>
+        <Button type="submit" variant="contained" disabled={isbnExists || producto.ISBN.length !== 13}>
+          Guardar Producto
+        </Button>
+      </Box>
+    </Box>
 
 {guardadoExitoso && (
         <Snackbar

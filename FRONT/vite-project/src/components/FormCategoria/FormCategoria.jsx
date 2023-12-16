@@ -29,7 +29,7 @@ const FormCategoria = () => {
 
   const checkExistingCategory = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/categorias/check?nombre=${nombre}`, {
+      const response = await fetch(`https://bookfinderback.onrender.com/categorias/check?nombre=${nombre}`, {
         method: 'GET',
       });
 
@@ -67,7 +67,7 @@ const FormCategoria = () => {
 
     if (confirmacion) {
       try {
-        const response = await fetch('http://localhost:3000/categoria', {
+        const response = await fetch('https://bookfinderback.onrender.com/categoria', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

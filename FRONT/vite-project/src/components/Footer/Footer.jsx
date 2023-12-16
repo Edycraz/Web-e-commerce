@@ -22,7 +22,7 @@ const Footer = () => {
         setIsLoading(true);
 
         try {
-            const response = await fetch('http://localhost:3000/enviar-formulario', {
+            const response = await fetch('https://bookfinderback.onrender.com/enviar-formulario', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)

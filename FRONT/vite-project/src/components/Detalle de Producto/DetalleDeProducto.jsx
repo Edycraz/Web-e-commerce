@@ -139,7 +139,13 @@ function DetalleDeProducto(props) {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 500 }}>
+        <Box sx={{ ...style, width: '70%',
+                 maxWidth: "700px",
+                 maxHeight: "600px",
+                 display: 'flex',       
+                 flexDirection: 'column', 
+                 alignItems: 'center',   
+                 justifyContent: 'center' }}>
           <Detail
             id={id}
             titulo={titulo}

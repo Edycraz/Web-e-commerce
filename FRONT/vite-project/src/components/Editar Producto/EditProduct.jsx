@@ -20,7 +20,7 @@ const EditProduct = () => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/producto-y-categoria-por-ID/${id}`);
+        const response = await fetch(`https://bookfinderback.onrender.com/producto-y-categoria-por-ID/${id}`);
         if (!response.ok) {
           throw new Error('Error al obtener detalles del producto.');
         }
@@ -59,7 +59,7 @@ const EditProduct = () => {
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const response = await fetch('http://localhost:3000/categorias-buscar-todas');
+        const response = await fetch('https://bookfinderback.onrender.com/categorias-buscar-todas');
         if (!response.ok) {
           throw new Error('Error al obtener categorías.');
         }
@@ -75,7 +75,7 @@ const EditProduct = () => {
 
   const handleUpdate = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/editar-producto/${id}`, {
+      const response = await fetch(`https://bookfinderback.onrender.com/editar-producto/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
