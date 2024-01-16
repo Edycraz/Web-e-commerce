@@ -32,17 +32,17 @@ Bienvenido a **BookFinder**, una aplicación web que te permite descubrir y expl
 
 1. Clona este repositorio en tu máquina local.
 
-2. Instala las dependencias del proyecto utilizando `npm install` tanto en el directorio raíz como en el directorio `/frontend`.
+2. Instala las dependencias del proyecto utilizando `npm install` tanto en el directorio BACK como en el directorio `FRONT/vite-project`.
 
 3. Configura la conexión a tu base de datos PostgreSQL en el archivo `.env` (puedes utilizar el archivo `.env.example` como referencia).
 
 4. Actualiza la variable de entorno `REACT_APP_MERCADOPAGO_API_KEY` en el archivo `.env` en el directorio `/frontend` con tu API Key de MercadoPago.
 
-5. Ejecuta el servidor backend con `npm start` en el directorio raíz.
+5. Ejecuta el servidor backend con `npm run dev` en el directorio raíz.
 
-6. Ejecuta la aplicación frontend con `npm start` en el directorio `/frontend`.
+6. Ejecuta la aplicación frontend con `npm run dev` en el directorio `FRONT/vite-project`.
 
-7. Abre tu navegador y accede a `http://localhost:3000` para empezar a utilizar "BookFinder".
+7. Abre tu navegador y accede a `http://localhost:5173` para empezar a utilizar "BookFinder".
 
 **Nota**: La conexión con MercadoPago no funcionará hasta que agregues tus propias credenciales. Asegúrate de agregar tu Access Token de MercadoPago en el archivo `server.js` en la línea 20 y tu API Key de MercadoPago en el componente `Nav.jsx` en la línea 135.
 
@@ -64,7 +64,7 @@ Este proyecto está bajo la licencia MIT. Siéntete libre de utilizarlo y modifi
 
 ## Contacto
 
-Si tienes preguntas o sugerencias, no dudes en ponerte en contacto con nosotros en [tu dirección de correo electrónico] o a través de [tu sitio web].
+Si tienes preguntas o sugerencias, no dudes en ponerte en contacto con nosotros en edwardadalidpereira@gmail.com o a través de https://edward.com.ar.
 
 ¡Esperamos que disfrutes utilizando "BookFinder"!
 
