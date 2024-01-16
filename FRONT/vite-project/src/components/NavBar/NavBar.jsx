@@ -132,7 +132,7 @@ const handleModalLogin = () => setModalLoginAbierto(!modalLoginAbierto)
 
   const [preferenceId, setPreferenceId] = useState(null);
 
-  initMercadoPago("APP_USR-b5cd3a44-d2dc-4925-8680-e558cca48b35");
+  initMercadoPago("...");
 
   const createPreference = async () => {
     try {
