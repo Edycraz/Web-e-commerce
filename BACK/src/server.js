@@ -17,7 +17,7 @@ server.use((req, res, next) => {
 });
 
 mercadopago.configure({
-    access_token: "APP_USR-257395260467218-120522-3b1dead10db761af764f29165ef066eb-144012804",
+    access_token: "...",
 });
 
 server.post("/create_preference", (req, res) => {
